@@ -4,8 +4,18 @@
 
     <h2>Number of Places: {{ places.length }}</h2>
 
+    <hr>
+
+    <h3>Create New Place</h3>
+    <p>Name: <input type="text" v-model="newPlace.name"></p>
+    <p>Address: <input type="text" v-model="newPlace.address"></p>
+    <button v-on:click="addPlace()">Submit a new place</button>
+
+    <hr>
+
     <ul style="list-style-type: none">
       <li v-for="place in places">
+        <p>id: {{ place.id }}</p>
         <p>name: {{ place.name }}</p>
         <p>address: {{ place.address }}</p>
         <hr>
@@ -25,7 +35,8 @@ export default {
   data: function() {
     return {
       message: "Places Index",
-      places: {name: "", address: ""}
+      places: [],
+      newPlace: {name: "", address: ""}
     };
   },
   created: function() {
@@ -34,7 +45,18 @@ export default {
       this.places = response.data
     }.bind(this))
   },
-  methods: {},
+  methods: {
+    addPlace: function() {
+      var params = {
+        name: this.newPlace.name,
+        address: this.newPlace.address
+      }
+      axios.post('http://localhost:3000/api/places', params).then(function(response) {
+        console.log("add place");
+        this.places.push(response.data);
+      }.bind(this))
+    }
+  },
   computed: {}
 };
 </script>
