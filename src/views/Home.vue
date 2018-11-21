@@ -29,7 +29,7 @@
 </style>
 
 <script>
-var axios = require('axios');
+import axios from 'axios'
 
 export default {
   data: function() {
@@ -42,19 +42,19 @@ export default {
   created: function() {
     axios.get('http://localhost:3000/api/places').then(function(response) {
       console.log(response.data);
-      this.places = response.data
-    }.bind(this))
+      this.places = response.data;
+    }.bind(this));
   },
   methods: {
     addPlace: function() {
       var params = {
         name: this.newPlace.name,
         address: this.newPlace.address
-      }
+      };
       axios.post('http://localhost:3000/api/places', params).then(function(response) {
         console.log("add place");
         this.places.push(response.data);
-      }.bind(this))
+      }.bind(this));
     }
   },
   computed: {}
